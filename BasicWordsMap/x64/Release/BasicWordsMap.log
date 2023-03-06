@@ -1,0 +1,25 @@
+﻿  BasicWordsMap.cpp
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(73,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(77,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(81,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(85,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(89,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(93,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(97,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(101,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(105,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(109,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(113,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(117,17): error C3861: 'searchAlgorithm': identifier not found
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(150,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(176,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(202,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(228,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(254,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(280,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(306,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(332,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(358,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(384,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(410,20): error C2059: syntax error: ';'
+F:\_AugmentedIntelligence\_NLP\BasicWordsMap\BasicWordsMap.cpp(436,20): error C2059: syntax error: ';'
