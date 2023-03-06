@@ -1,0 +1,1 @@
+F:\_AugmentedIntelligence\_NLP\WikisimpleArticleExtract\x64\Release\WikisimpleArticleExtract.vcxproj.CopyComplete

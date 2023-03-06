@@ -1,0 +1,670 @@
+/*
+    Copyright(C) 2022 Tyler Crockett | Macdaddy4sure.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissionsand
+    limitations under the License.
+*/
+
+#include <iostream>
+#include <string>
+#include <filesystem>
+#include <thread>
+#include <mysql.h>
+
+using namespace std;
+using namespace filesystem;
+
+class _Settings
+{
+public:
+    static string GetMySQLHostname();
+    static string GetMySQLUsername();
+    static string GetMySQLPassword();
+};
+
+class _NLP
+{
+public:
+    static string isNoun(string word);
+    static string isPronoun(string word);
+    static string isVerb(string word);
+    static string isAdjective(string word);
+    static string isAdverb(string word);
+    static bool isAdverbManner(string word);
+    static string isInterjection(string word);
+    static string isConjunction(string word);
+    static string isDeterminer(string word);
+    static string isArticle(string word);
+    static bool isInterjectionSwear(string word);
+    static bool isEmotiveInterjections(string word);
+    static bool isCognitiveInterjections(string word);
+    static bool isVolitiveInterjections(string word);
+    static bool isPossessiveDeterminer(string word);
+    static bool isPreDeterminer(string word);
+    static bool isDefiniteArticle(string word);
+    static bool isIndefiniteArticle(string word);
+    static bool isNumberDigits(string word);
+    static bool isFiniteVerb(string word);
+    static bool isInfinitiveVerb(string word);
+    static bool isTransitiveVerb(string word);
+    static bool isIntransitiveVerb(string word);
+    static bool isRegularVerb(string word);
+    static bool isIrregularVerb(string word);
+    static bool isPrimaryAuxiliaryVerb(string word);
+    static bool isSemiModalAuxiliaryVerb(string word);
+    static bool isParticiple(string word);
+    static bool isActionVerb(string word);
+    static bool isLinkingVerb(string word);
+    static bool isCausativeVerb(string word);
+    static bool isAdverbTime(string word);
+    static bool isAdverbPlace(string word);
+    static bool isAdverbDegree(string word);
+    static string getDirectObject(string* words);
+    //static string getDirectObject();
+    static string getIndirectObject(string* words);
+    static string getObjectofPreposition(string* words);
+    static string* getNounPhrase(string* words);
+    static string* getSubjectComplements(string* words);
+    static string* getPredicateNoun(string* words);
+    static string* getPredicatePronoun(string* words);
+    static string* getPredicateAdjective(string* words);
+    static string* getRelativeClause(string* words);
+    static string* getInfinitivePhrase(string* words);
+    static string* getAdjuncts(string* words);
+    static string* getAdjectivePhrase(string* words);
+    static string* getAdverbialPhrase(string* words);
+    static string* getParticiplePhrase(string* words);
+    static string* getAbsolutePhrase(string* words);
+    static string getAppositive(string* words);
+    static string* getIndependentClause(string* words);
+    static string* getDependentClause(string* words);
+    static string* getNounClause(string* words);
+    static string* getAdverbialClause(string* words);
+    static string isPreposition(string word);
+    static string isNumber(string word);
+    static bool isNumberWords(string word);
+    static bool isSimpleSentence(string* words);
+    static bool isCompoundSentence(string* words, string* subject, string* predicate);
+    static bool isComplexSentence(string* words, string* subject, string* predicate);
+    static bool isCompound_ComplexSentence(string* words, string* subject, string* predicate);
+    static bool isDeclaritiveSentence(string* words, string* subject, string* predicate);
+    static bool isInterrogativeSentence(string* words, string* subject, string* predicate);
+    static bool isNegativeInterrogativeSentence(string* words, string* subject, string* predicate);
+    static bool isImperativeSentence(string* words, string* subject, string* predicate);
+    static bool isConditionalSentence(string* words, string* subject, string* predicate);
+    static bool isRegularSentence(string* words, string* subject, string* predicate);
+    static bool isIrregularSentence(string* words, string* subject, string* predicate);
+    static bool isSingleWordSentence(string* words);
+    static bool isSentenceFragment(string* words);
+    static bool isInstructions(string* words);
+    static bool isYesNoQuestion(string* words);
+    static bool isLiteralQuestions(string* words);
+    static bool isIndirectSentence(string* words);
+    static bool isItDepends(string* words);
+    static bool isStatementofUncertainty(string* words);
+    static bool isRunOnSentence(string* words);
+    static bool isCommaSplice(string* words);
+    static string* getSubject(string* words);
+    static string* getPredicate(string* words);
+    static void getPartsofSpeech(string* words);
+    //static string* parseDefinitions(static string definitions);
+    static string* getPrepositionalPhrase(string* words);
+    static string* getPrepositionalPhraseNoun(string* words);
+    static string* getPreposionalPhraseVerb(string* words);
+    static string* getPrepositionalPhraseAdjective(string* words);
+    static string* getPrepositionalPhraseAdverb(string* words);
+    static string* getPrepositionalPhraseIdiom(string* words);
+    static string* getPrepositionalPhraseDangling(string* words);
+    static bool isCommonNoun(string word);
+    static bool isProperNoun(string word);
+    static bool isFirstName(string word);
+    static bool isLastName(string word);
+    static bool isBrandName(string word);
+    static bool isAppellations(string word);
+    static bool isJobTitle(string word);
+    static bool isFamilialRole(string word);
+    static bool isNounAddress(string word);
+    static bool isConcreteNoun(string word);
+    static bool isAbstractNoun(string word);
+    static bool isCountableNoun(string word);
+    static bool isUncountableNoun(string word);
+    static bool isCollectiveNoun(string word);
+    static bool isCompoundNoun(string word);
+    static bool isCreatingNoun(string word);
+    static bool isPersonalNumberPronoun(string word);
+    static bool isPersonalPersonPronoun(string word);
+    static bool isPersonalGenderPronoun(string word);
+    static bool isPersonalCasePronoun(string word);
+    static bool isPersonalReflexivePronoun(string word);
+    static bool isIntensivePronoun(string word);
+    static bool isIndefinitePronoun(string word);
+    static bool isDemonstrativePronoun(string word);
+    static bool isInterogativePronoun(string word);
+    static bool isRelativePronoun(string word);
+    static bool isReciprocalPronoun(string word);
+    static bool isDummyPronoun(string word);
+    static bool isPossessivePronoun(string word);
+    static bool isStativeVerb(string word);
+    static bool isLightVerb(string word);
+    static bool isPhrasalVerbs(string word);
+    static bool isConditionalVerb(string word);
+    static bool isFactiveVerb(string word);
+    static bool isReflexiveVerb(string word);
+    static bool isAttributiveAdjective(string word);
+    static bool isPredicativeAdjective(string word);
+    static bool isProperAdjective(string word);
+    static bool isCollectiveAdjective(string word);
+    static bool isDemonstrativeAdjective(string word);
+    static bool isInterrogativeAdjective(string word);
+    static bool isNominalAdjective(string word);
+    static bool isCompoundAdjective(string word);
+    static bool isOrderAdjective(string word);
+    static bool isComparativeAdjective(string word);
+    static bool isSuperlativeAdjective(string word);
+    static bool isMitigator(string word);
+    static bool isIntensifier(string word);
+    static bool isAdverbFrequency(string word);
+    static bool isAdverbPurpose(string word);
+    static bool isAdverbFocusing(string word);
+    static bool isAdverbNegative(string word);
+    static bool isAdverbConjunctive(string word);
+    static bool isAdverbEvaluative(string word);
+    static bool isAdverbViewpoint(string word);
+    static bool isAdverbRelative(string word);
+    static bool isAdverbialNoun(string word);
+    static bool isRegularAdverb(string word);
+    static bool isIrregularAdverb(string word);
+    static bool isComparativeAdverb(string word);
+    static bool isSuperlativeAdverb(string word);
+    static bool isOrderAdverb(string word);
+    static bool isPrepositionwithNouns(string word);
+    static bool isPrepositionalwithVerbs(string word);
+    static bool isPrepositionalwithAdjectives(string word);
+    static bool isCoordinativeConjunction(string word);
+    static bool isCorrelativeConjunction(string word);
+    static bool isSubordinatingConjunctions(string word);
+    static bool isParticles(string word);
+    static bool isDeterminers(string word);
+    static bool isGerund(string word);
+    static bool isInterjections(string word);
+    static bool isIndependentClause(string* words);
+    static bool isDependentClause(string* words);
+    static bool isNounClause(string* words);
+    static bool isAdverbialClause(string* words);
+    static bool isPresentTense(string word);
+    static bool isPresentTenseSentence(string* words);
+    static bool isPastTense(string word);
+    static bool isPastTenseSentence(string* words);
+    static bool isFutureTense(string word);
+    static bool isFutureTenseSentence(string* words);
+    static bool isPerfectiveAspect(string word);
+    static bool isPerfectiveAspectSentence(string* words);
+    static bool isImperfectiveAspect(string word);
+    static bool isImperfectiveAspectSentence(string* words);
+    static bool isAspectofPresentTense(string word);
+    static bool isAspectofPresentTenseSentence(string* words);
+    static bool isAspectofPastTense(string word);
+    static bool isAspectofPastTenseSentence(string* words);
+    static bool isAspectofFutureTense(string word);
+    static bool isAspectofFutureTenseSentence(string* words);
+    static bool isIndicativeMood(string word);
+    static bool isIndicativeMoodSentence(string* words);
+    static bool isSubjunctiveMood(string word);
+    static bool isSubjunctiveMoodSentence(string* words);
+    static bool isSubjunctiveMoodWishes(string word);
+    static bool isActiveVoice(string word);
+    static bool isActiveVoiceSentence(string* words);
+    static bool isPassiveVoice(string word);
+    static bool isPassiveVoiceSentence(string* words);
+    static bool isMiddleVoice(string word);
+    static bool isMiddleVoiceSentence(string* words);
+    static bool isReportedSpeech(string word);
+    static bool isReportedSpeechSentence(string* words);
+    //static bool isNumber(staticstring word);
+    static bool isPlural(string word);
+    static bool isPluralSentence(string* words);
+    static bool isSingular(string word);
+    static bool isSingularSentence(string* words);
+    //staticstring getGenderNoun(staticstring word);
+    static string getGenderNoun(string words);
+    static string* getGenderNouns(string* words);
+    static string* returnWords(string sentence);
+    static string* QueryDatabaseWordTypes(string word);
+    static string** QueryDatabaseDefinitions(string word, string* wordTypes);
+};
+
+//class _NLU
+//{
+//public:
+//    static void NewsWatchingScraper();
+//    static string* getDictionaryVector(string word);
+//    static string* getAdditiveVector(string word);
+//    static string* getAdditiveVectorSentence(string sentence);
+//    static string* VectorAddition(string* vector, string* total);
+//    static string* VectorAddition(string* vector, string vector2);
+//    static string* getSentenceVectors(string sentence);
+//    static string* getSentenceVectorsAdditive(string sentence);
+//    static string* getSentenceVectorsAdditiveAverage(string sentence);
+//    static string BiasCheck(string text);
+//    static string BiasCheck(string text, string data);
+//};
+
+//class _SpeechRecognition
+//{
+//public:
+//    static void SpeechRecognition();
+//};
+
+//class _Fallacy
+//{
+//public:
+//    static string FallacyCheck(string text, bool fiction);
+//    static string FallacyCheck(string text, string data, bool fiction);
+//    static bool AffirmingTheConsequent(string sentence);
+//    static bool DenyingTheAntecedent(string sentence);
+//    static bool AffirmingADisjunct(string sentence);
+//    static bool DenyingAConjunct(string sentence);
+//    static bool FallacyOfTheUndistributedMiddle(string sentence);
+//    static bool AppealToProbability(string sentence);
+//    static bool ArgumentFromFallacy(string sentence);
+//    static bool BaseRateFallacy(string sentence);
+//    static bool ConjunctionFallacy(string sentence);
+//    static bool MaskedManFallacy(string sentence);
+//    static bool QualificationFallacies(string sentence);
+//    static bool ExistentialFallacy(string sentence);
+//    static bool AffirmativeConclusionFromANegativePremise(string sentence);
+//    static bool FallacyOfExclusivePremises(string sentence);
+//    static bool FallacyOfFourTerms(string sentence);
+//    static bool IllicitMajor(string sentence);
+//    static bool IllicitMinor(string sentence);
+//    static bool NegativeConclusionFromAffirmativePremises(string sentence);
+//    static bool ModalFallacy(string sentence);
+//    static bool ModalScopeFallacy(string sentence);
+//    static bool ArgumentToModeration(string sentence);
+//    static bool ContinuumFallacy(string sentence);
+//    static bool SuppressedCorrelative(string sentence);
+//    static bool DefinistFallacy(string sentence);
+//    static bool DivineFallacy(string sentence);
+//    static bool DoubleCounting(string sentence);
+//    static bool Equivacation(string sentence);
+//    static bool AmbiguousMiddleTerm(string sentence);
+//    static bool DefinitionalRetreat(string sentence);
+//    static bool MotteAndBaileyFallacy(string sentence);
+//    static bool FallacyOfAccent(string sentence);
+//    static bool PersuasiveDefinition(string sentence);
+//    static bool EconogicalFallacy(string sentence);
+//    static bool EtynologicalFallacy(string sentence);
+//    static bool FallacyOfComposition(string sentence);
+//    static bool FallacyOfDivision(string sentence);
+//    static bool FalseAttribuation(string sentence);
+//    static bool FallacyOfQuotingOutOfContext(string sentence);
+//    static bool FalseAuthority(string sentence);
+//    static bool FalseDilemma(string sentence);
+//    static bool FalseEquivalence(string sentence);
+//    static bool FeedbackFallacy(string sentence);
+//    static bool HistorianFallacy(string sentence);
+//    static bool HistoricalFallacy(string sentence);
+//    static bool BaconianFallacy(string sentence);
+//    static bool HomuculusFallacy(string sentence);
+//    static bool InflationOfConflect(string sentence);
+//    static bool IfByWhiskey(string sentence);
+//    static bool IncompleteComparison(string sentence);
+//    static bool InconsistentComparison(string sentence);
+//    static bool IntentionalityFallacy(string sentence);
+//    static bool LumpOfLabourFallacy(string sentence);
+//    static bool KettleLogic(string sentence);
+//    static bool LudicFallacy(string sentence);
+//    static bool QuantitativeFallacy(string sentence);
+//    static bool MindProjectionFallacy(string sentence);
+//    static bool MoralisticFallacy(string sentence);
+//    static bool MovingTheGoalpostsFallacy(string sentence);
+//    static bool NirvanaFallacy(string sentence);
+//    static bool ProofByAssertion(string sentence);
+//    static bool ProsecutorFallacy(string sentence);
+//    static bool ProvingTooMuch(string sentence);
+//    static bool PsycholoistFallacy(string sentence);
+//    static bool ReferentialFallacy(string sentence);
+//    static bool Reification(string sentence);
+//    static bool RetrospectiveDeterminism(string sentence);
+//    static bool SlipperySlope(string sentence);
+//    static bool SpecialPleading(string sentence);
+//    static bool BeggingTheQuestion(string sentence);
+//    static bool LoadedLabelFallacy(string sentence);
+//    static bool CircularReasoning(string sentence);
+//    static bool FallacyOfManyQuestions(string sentence);
+//    static bool FaultyGeneralization(string sentence);
+//    static bool AccidentFallacy(string sentence);
+//    static bool NoTrueScotsmanFallacy(string sentence);
+//    static bool CherryPickingFallacy(string sentence);
+//    static bool SurvivorshipBias(string sentence);
+//    static bool FalseAnalogy(string sentence);
+//    static bool HastyGeneralization(string sentence);
+//    static bool InductiveFallacy(string sentence);
+//    static bool MisleadingVividness(string sentence);
+//    static bool OverWhelmingException(string sentence);
+//    static bool ThoughtTerminatingCliche(string sentence);
+//    static bool QuestionableCause(string sentence);
+//    static bool CumHocErgoPropterHocFallacy(string sentence);
+//    static bool PostHocErgoPropterHoc(string sentence);
+//    static bool WrongDirectionFallacy(string sentence);
+//    static bool CausalOversimplification(string sentence);
+//    static bool FurtiveFallacy(string sentence);
+//    static bool GamblerFallacy(string sentence);
+//    static bool MagicalThinking(string sentence);
+//    static bool RegressionFallacy(string sentence);
+//    static bool AppealToTheStoneFallacy(string sentence);
+//    static bool ArgumentFromIgnorance(string sentence);
+//    static bool ArgumentFromIncredulity(string sentence);
+//    static bool ArgumentFromRepitition(string sentence);
+//    static bool ArgumentFromSilence(string sentence);
+//    static bool IrrelevantConclusionFallacy(string sentence);
+//    static bool RedHerringFallacy(string sentence);
+//    static bool AdHominem(string sentence);
+//    static bool CircumstantialAdHominem(string sentence);
+//    static bool PoisoningTheWell(string sentence);
+//    static bool AppealToMotive(string sentence);
+//    static bool WafkaTrapping(string sentence);
+//    static bool TonePolicing(string sentence);
+//    static bool TraitorousCriticFallacy(string sentence);
+//    static bool AppealToAuthorityFallacy(string sentence);
+//    static bool AppealToAccomplishmentFallacy(string sentence);
+//    static bool CourtiersReply(string sentence);
+//    static bool AppealToConsequences(string sentence);
+//    static bool AppealToEmotion(string sentence);
+//    static bool AppealToFear(string sentence);
+//    static bool AppealToFlattery(string sentence);
+//    static bool AppealToPity(string sentence);
+//    static bool AppealToRidicule(string sentence);
+//    static bool AppealToSpite(string sentence);
+//    static bool JudgementalLanguage(string sentence);
+//    static bool PoohPooh(string sentence);
+//    static bool WishfulThinking(string sentence);
+//    static bool AppealToNature(string sentence);
+//    static bool AppealToNovelty(string sentence);
+//    static bool AppealToPoverty(string sentence);
+//    static bool AppealToTradition(string sentence);
+//    static bool AppealToWealth(string sentence);
+//    static bool AppealToThreat(string sentence);
+//    static bool ArgumentumAdPopulum(string sentence);
+//    static bool AssociationFallacy(string sentence);
+//    static bool IpseDixit(string sentence);
+//    static bool PsychogeneticFallacy(string sentence);
+//    static bool ChronologicalSnobbery(string sentence);
+//    static bool FallacyOfRelativePrivatation(string sentence);
+//    static bool GeneticFallacy(string sentence);
+//    static bool EntitledToOpiniom(string sentence);
+//    static bool NaturalisticFallacy(string sentence);
+//    static bool IsOughtFallacy(string sentence);
+//    static bool NaturalisticFallacyFallacy(string sentence);
+//    static bool StrawManFallacy(string sentence);
+//    static bool TexasSharpshooterFallacy(string sentence);
+//    static bool AppealToHypocrisy(string sentence);
+//    static bool TwoWrongsMakeARight(string sentence);
+//    static bool VacuousTruth(string sentence);
+//};
+
+//class _Bias
+//{
+//public:
+//    static bool AmbiguityEffect(string sentence);
+//    static bool Anchoring(string sentence);
+//    static bool AnthropocentricThinking(string sentence);
+//    static bool Anthropomorphism(string sentence);
+//    static bool AttentionalBias(string sentence);
+//    static bool AutomationBias(string sentence);
+//    static bool AvailabilityHeuristic(string sentence);
+//    static bool AvailabilityCascade(string sentence);
+//    static bool BackfireEffect(string sentence);
+//    static bool BandwagonEffect(string sentence);
+//    static bool BaseRateFallacy(string sentence);
+//    static bool BeliefBias(string sentence);
+//    static bool BenFranklynEffect(string sentence);
+//    static bool BerksonParadox(string sentence);
+//    static bool BiasBlindSpot(string sentence);
+//    static bool ChoiceSupportiveBias(string sentence);
+//    static bool ClusteringIllusion(string sentence);
+//    static bool ConfirmationBias(string sentence);
+//    static bool CongruenceBias(string sentence);
+//    static bool ConjunctionFallacy(string sentence);
+//    static bool Conservatism(string sentence);
+//    static bool ContinuedInfluenceEffect(string sentence);
+//    static bool ContrastEffect(string sentence);
+//    static bool CourtesyBias(string sentence);
+//    static bool CurseOfKnowledge(string sentence);
+//    static bool Declinism(string sentence);
+//    static bool DecoyEffect(string sentence);
+//    static bool DefaultEffect(string sentence);
+//    static bool DenominationEffect(string sentence);
+//    static bool DispositionEffect(string sentence);
+//    static bool DistinktionBias(string sentence);
+//    static bool DreadAversion(string sentence);
+//    static bool DunningKrugerEffect(string sentence);
+//    static bool DurationNeglect(string sentence);
+//    static bool EmpathyGap(string sentence);
+//    static bool EndowmentEffect(string sentence);
+//    static bool ExaggeratedExpectation(string sentence);
+//    static bool ExpactationBias(string sentence);
+//    static bool FocusingEffect(string sentence);
+//    static bool ForerEffect(string sentence);
+//    static bool FormFunctionAttributionBias(string sentence);
+//    static bool FramingEffect(string sentence);
+//    static bool FrequencyIllusion(string sentence);
+//    static bool FunctionalFixedness(string sentence);
+//    static bool GamblersFallacy(string sentence);
+//    static bool Groupthink(string sentence);
+//    static bool HardEasyEffect(string sentence);
+//    static bool HindsightBias(string sentence);
+//    static bool HostileAttributionBias(string sentence);
+//    static bool HotHandFallacy(string sentence);
+//    static bool HyperbolicDiscounting(string sentence);
+//    static bool IdentifiableVictimEffect(string sentence);
+//    static bool IKEAEffect(string sentence);
+//    static bool IllicitTransference(string sentence);
+//    static bool IllusionOfControl(string sentence);
+//    static bool IllusionOfValidity(string sentence);
+//    static bool IllusoryCorrelation(string sentence);
+//    static bool IllusoryTruthEffect(string sentence);
+//    static bool ImpactBias(string sentence);
+//    static bool ImplicitAssociation(string sentence);
+//    static bool InformationBias(string sentence);
+//    static bool InsenitiveityToSampleSize(string sentence);
+//    static bool InteroceptiveBias(string sentence);
+//    static bool IrrationalEscalation(string sentence);
+//    static bool LawOfTheInstrument(string sentence);
+//    static bool LessIsBetterEffect(string sentence);
+//    static bool LookElsewhereEffect(string sentence);
+//    static bool LossAversion(string sentence);
+//    static bool MereExposureEffect(string sentence);
+//    static bool MoneyIllusion(string sentence);
+//    static bool MoralCredentialEffect(string sentence);
+//    static bool NegativityBias(string sentence);
+//    static bool NeglectOfProbability(string sentence);
+//    static bool NormalcyBias(string sentence);
+//    static bool NotInventedHere(string sentence);
+//    static bool ObserverExpectancyEffect(string sentence);
+//    static bool OmissionBias(string sentence);
+//    static bool OptimismBias(string sentence);
+//    static bool OstrichEffect(string sentence);
+//    static bool OutcomeBias(string sentence);
+//    static bool OverconfidenceEffect(string sentence);
+//    static bool Parelidolia(string sentence);
+//    static bool PygmalionEffect(string sentence);
+//    static bool PessimismBias(string sentence);
+//    static bool PlanningFallacy(string sentence);
+//    static bool PostPurchaseRationalization(string sentence);
+//    static bool PresentBias(string sentence);
+//    static bool ProInnovationBias(string sentence);
+//    static bool ProjectionBias(string sentence);
+//    static bool PseudoertaintyEffect(string sentence);
+//    static bool Reactance(string sentence);
+//    static bool ReactiveDevaluation(string sentence);
+//    static bool RecencyIllusion(string sentence);
+//    static bool RegressiveBias(string sentence);
+//    static bool RestraintBias(string sentence);
+//    static bool ReasonEffect(string sentence);
+//    static bool RiskCompensation(string sentence);
+//    static bool SalienceBias(string sentence);
+//    static bool SelectionBias(string sentence);
+//    static bool SelectivePerception(string sentence);
+//    static bool SemmelweisReflex(string sentence);
+//    static bool SexualOverperceptionBias(string sentence);
+//    static bool SocialComparisonBias(string sentence);
+//    static bool SocialDesirabilityBias(string sentence);
+//    static bool StatusQuoBias(string sentence);
+//    static bool Stereotypeing(string sentence);
+//    static bool SubAdditiveityEffect(string sentence);
+//    static bool SubjectiveValidation(string sentence);
+//    static bool Surrogation(string sentence);
+//    static bool SurvivorshipBias(string sentence);
+//    static bool TimeSavingBias(string sentence);
+//    static bool ThirdPersonEffect(string sentence);
+//    static bool ParkinsonLawOfTriviality(string sentence);
+//    static bool UnitBias(string sentence);
+//    static bool WeberFechnerLaw(string sentence);
+//    static bool WellTravelledRoadEffect(string sentence);
+//    static bool WomanAreWonderfulEffect(string sentence);
+//    static bool ZeroRiskBias(string sentence);
+//    static bool ZeroSumBias(string sentence);
+//    static bool BaseRateBias(string sentence);
+//    static bool ConjunctionBias(string sentence);
+//    static bool Gamblersbias(string sentence);
+//    static bool HotHandBias(string sentence);
+//    static bool PlanningBias(string sentence);
+//};
+
+static string completed[100][5][5];
+
+// MySQL Settings
+static string mysql_hostname;
+static string mysql_username;
+static string mysql_password;
+
+static const string _verb_list[] = { "transitive_verb", "intransitive_verb", "irregular_verb", "action_verb", "stative_verb", "linking_verb", "light_verb", "phrasal_verb", "conditional_verb", "causative_verb", "factive_verb", "reflexive_verb" };
+static const string _noun_list[] = { "common_noun", "proper_noun", "noun_of_address", "concrete_noun", "abstract_noun", "countable_noun", "uncountable_noun", "collective_noun", "compound_nouns", "nominalization" };
+static const string _adjectives_list[] = { "attributive_adjectives", "predicative_adjectives", "proper_adjectives", "collective_adjectives", "demonstrative_adjectives", "iterrogative_adjectives", "nominal_adjectives", "compound_adjectives", "order_of_adjectives", "comparative_adjectives", "superlative_adjectives", "" };
+static const string _adverb_list[] = { "adverb_of_time", "adverb_of_place", "adverb_of_manner", "mitigators", "intensifiers", "adverb_of_frequency", "adverb_of_purpose", "focusing_adverbs", "negative_adverbs", "conjunctive_adverbs", "evaluative_adverbs", "viewpoint_adverbs", "relative_adverbs", "adverbial_nouns", "regular_adverb", "irregular_adverb", "comparative_adverb", "superlative_adverb" };
+static const string _pronoun_list[] = { "personal_pronouns", "intensive_pronoun", "indefinite_pronoun", "demonstrative_pronoun", "interogative_pronoun", "relative_pronoun", "reciprocal_pronoun", "dummy_pronoun" };
+static const string _logic_operators[] = { "and", "or", "not" };
+static const string _categories_of_preposition[] = { "time", "place", "direction", "movement", "agency", "instrument", "device", "reason", "purpose", "connection", "origin" };
+
+// Verbs
+static string** verbs;
+static string** transitive_verbs;
+static string** intransitive_verbs;
+static string** irregular_verbs;
+static string** action_verbs;
+static string** stative_verbs;
+static string** linking_verbs;
+static string** light_verbs;
+static string** phrasal_verbs;
+static string** conditional_verbs;
+static string** causative_verbs;
+static string** factive_verbs;
+static string** reflexive_verbs;
+
+// Nouns
+static string** nouns;
+static string** common_nouns;
+static string** proper_nouns;
+static string** noun_of_address;
+static string** concrete_nouns;
+static string** abstract_nouns;
+static string** countable_nouns;
+static string** uncountable_nouns;
+static string** collective_nouns;
+static string** compound_nouns;
+static string** nominalizations;
+
+// Adjectives
+static string** adjectives;
+static string** attributaive_adjectives;
+static string** predicative_adjectives;
+static string** proper_adjectives;
+static string** collective_adjectives;
+static string** demonstrative_adjectives;
+static string** interrogative_adjectives;
+static string** nominal_adjectives;
+static string** compund_adjectives;
+static string** order_of_adjectives;
+static string** comparative_adjectives;
+static string** superlative_adjectives;
+
+// Adverbs
+static string** adverbs;
+static string** adverbs_of_time;
+static string** adverbs_of_place;
+static string** adverbs_of_manner;
+static string** mitigators;
+static string** intensifiers;
+static string** adverbs_of_frequency;
+static string** adverbs_of_purpose;
+static string** focusing_adverbs;
+static string** negative_adverbs;
+static string** conjunctive_adverbs;
+static string** evaluative_adverbs;
+static string** viewpoint_adverbs;
+static string** relative_adverbs;
+static string** adverbial_nouns;
+static string** regular_adverbs;
+static string** irregular_adverbs;
+static string** comparative_adverbs;
+static string** superlative_adverbs;
+static string** order_adverb;
+
+// Pronouns
+static string** pronouns;
+static string** personal_pronouns;
+static string** intensive_pronouns;
+static string** indefinite_pronouns;
+static string** demonstrative_pronouns;
+static string** interogative_pronouns;
+static string** relative_pronouns;
+static string** reciprocal_pronouns;
+static string** dummy_pronouns;
+
+// Interjections
+static string** interjection_swear;
+static string** emotive_interjections;
+static string** cognitive_interjections;
+static string** volitive_interjections;
+
+// Numbers
+static string** numbers;
+static string** numbers_digits;
+
+// Conjunctions
+static string** conjunction;
+
+// Determiner
+static string** possessive_determiner;
+static string** pre_determiner;
+
+// Articles
+static string** definite_article;
+static string** indefinite_article;
+
+// Preposition
+static string** preposition;
+
+struct TimeFormat
+{
+    long long years;
+    long long months;
+    long long weeks;
+    long long days;
+    long long hours;
+    long long minutes;
+    long long seconds;
+    long long milliseconds;
+};
+
+#pragma once
